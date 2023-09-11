@@ -7,9 +7,16 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => CalculadoraController(),
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.deepPurple,
+          ).copyWith(
+            secondary: Colors.amber,
+          ),
+        ),
         debugShowCheckedModeBanner: false,
-        home: CalculadoraImc(),
+        home: const CalculadoraImc(),
       ),
     ),
   );

@@ -25,7 +25,7 @@ class _ListRowState extends State<ListRow> {
   @override
   void initState() {
     super.initState();
-    _backgroundColor = widget.isSelected ? Colors.blue : Colors.white;
+    _backgroundColor = widget.isSelected ? Colors.amber : Colors.white;
   }
 
   @override
@@ -35,7 +35,7 @@ class _ListRowState extends State<ListRow> {
     if (widget.isSelected != oldWidget.isSelected) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         setState(() {
-          _backgroundColor = widget.isSelected ? Colors.blue : Colors.white;
+          _backgroundColor = widget.isSelected ? Colors.amber : Colors.white;
         });
       });
     }
@@ -69,13 +69,11 @@ class _ListRowState extends State<ListRow> {
               children: [
                 Text(
                   'IMC: ${widget.imc}',
-                  style: TextStyle(
-                      color: widget.isSelected ? Colors.white : Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 Text(
                   'Peso: ${widget.peso} - Altura: ${widget.altura}',
-                  style: TextStyle(
-                      color: widget.isSelected ? Colors.white : Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),
