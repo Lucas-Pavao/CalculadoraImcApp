@@ -12,6 +12,13 @@ class ListaImcView extends StatefulWidget {
 
 class _ListaImcViewState extends State<ListaImcView> {
   late CalculadoraController controller;
+  int _selectedIndex = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    CalculadoraController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +41,47 @@ class _ListaImcViewState extends State<ListaImcView> {
                         itemCount: controller.imcs.length,
                         itemBuilder: (_, index) {
                           var imc = controller.imcs[index];
-                          return ListRow(
+                          bool isSelected = _selectedIndex == index;
+                          return GestureDetector(
+                            onLongPress: () {
+                              setState(() {
+                                _selectedIndex = index;
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                    SnackBar(
+                                      content: const Text('Excluir IMC?'),
+                                      action: SnackBarAction(
+                                        label: 'Excluir',
+                                        onPressed: () {
+                                          // Remova o item da lista quando a ação for pressionada
+                                          setState(() {
+                                            _selectedIndex =
+                                                -1; // Ressalta a cor para o branco
+                                          });
+                                          controller.removerImc(imc.id!);
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                  .closed
+                                  .then((reason) {
+                                if (reason != SnackBarClosedReason.action) {
+                                  // A Snackbar foi fechada sem acionar a ação
+                                  setState(() {
+                                    _selectedIndex =
+                                        -1; // Ressalta a cor para o branco
+                                  });
+                                }
+                              });
+                            },
+                            child: ListRow(
                               imc: imc.imc,
-                              peso: imc.weight,
-                              altura: imc.height);
+                              peso: imc.peso,
+                              altura: imc.altura,
+                              isSelected: isSelected,
+                            ),
+                          );
                         });
               },
             ),
