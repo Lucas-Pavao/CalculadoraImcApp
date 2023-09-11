@@ -10,6 +10,9 @@ class CalculadoraView extends StatefulWidget {
 }
 
 class _CalculadoraViewState extends State<CalculadoraView> {
+  FocusNode pesoFocusNode = FocusNode();
+  FocusNode alturaFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final CalculadoraController controller =
@@ -27,6 +30,7 @@ class _CalculadoraViewState extends State<CalculadoraView> {
           style: const TextStyle(fontSize: 20),
           keyboardType: TextInputType.number,
           controller: controller.pesoController,
+          focusNode: pesoFocusNode,
         ),
         TextFormField(
           decoration: const InputDecoration(
@@ -36,10 +40,13 @@ class _CalculadoraViewState extends State<CalculadoraView> {
           style: const TextStyle(fontSize: 20),
           keyboardType: TextInputType.number,
           controller: controller.alturaController,
+          focusNode: alturaFocusNode,
         ),
         ElevatedButton(
           onPressed: () {
             controller.calcular();
+            pesoFocusNode.unfocus();
+            alturaFocusNode.unfocus();
           },
           child: const Text('Calcular'),
         ),
